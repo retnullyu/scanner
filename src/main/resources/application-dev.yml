@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/spring_admin_vue?useUnicode=true&characterEncoding=UTF8&useSSL=false&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    platform: mysql
+    type: com.zaxxer.hikari.HikariDataSource
+
+  redis:
+    database: 11
+    host: 127.0.0.1
+    port: 6379
+    timeout: 2000
+    password: 123456
+    lettuce:
+      pool:
+        max-idle: 8
+        min-idle: 0
+        max-active: 8
+        max-wait: -1ms
+  cache:
+    redis:
+      use-key-prefix: true
+      time-to-live: 60s
+
+# 七牛云文件上传配置
+qiniu:
+  accessKey:
+  secretKey:
+  bucketName:
+  fileDomain:
+

@@ -1,0 +1,8 @@
+# ignore file
+*.iml
+target/
+.idea/
+logs/
+*.classpath
+*.project
+.DS_Store
