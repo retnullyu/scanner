@@ -179,4 +179,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, Integer, SysUse
         }
         return super.update(entity);
     }
+    @Override
+    public Boolean updateUer(SysUser entity){
+        return baseMapper.updateByPrimaryKeySelective(entity)>0;
+    }
 }

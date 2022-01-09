@@ -1,7 +1,7 @@
 package top.retnull.myscanner.service;
 
 import com.r4v3zn.fofa.core.DO.FofaData;
-import top.retnull.myscanner.entities.FofaQueryHistory;
+import top.retnull.myscanner.entities.FofaHistory;
 import top.retnull.myscanner.entities.SysUser;
 import top.retnull.myscanner.vo.FofaConfig;
 
@@ -12,7 +12,7 @@ import top.retnull.myscanner.vo.FofaConfig;
  * @author: luoyu
  * @create: 2022-01-05 20:12
  **/
-public interface FofaService extends BaseService<SysUser, Integer> {
+public interface FofaService extends BaseService<FofaHistory, Integer> {
 
 
     /**
@@ -20,14 +20,14 @@ public interface FofaService extends BaseService<SysUser, Integer> {
      * @param fofaConfig
      * @return
      */
-    public Boolean fofaconfig(FofaConfig fofaConfig);
+    Boolean fofaconfig(FofaConfig fofaConfig);
 
 
-    public FofaData fofaquery(FofaQueryHistory fofaQueryHistory);
+    FofaData fofaquery(FofaHistory fofaQueryHistory) throws Exception;
 
-    public FofaQueryHistory fofahistory(SysUser sysUser);
+     FofaHistory fofahistory(SysUser sysUser);
 
-    public Boolean export(FofaQueryHistory fofaQueryHistory);
+     Boolean export(FofaHistory fofaQueryHistory);
 
 
 }

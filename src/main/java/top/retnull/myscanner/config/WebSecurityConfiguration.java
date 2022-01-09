@@ -81,6 +81,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/auth/**", "/actuator/**").permitAll() //所有用户可访问
+                .antMatchers("/information/**").permitAll() //暂时测试
                 .antMatchers(
                         "/v2/api-docs",
                         "/doc.html",

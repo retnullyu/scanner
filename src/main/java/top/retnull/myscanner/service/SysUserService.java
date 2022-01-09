@@ -62,4 +62,6 @@ public interface SysUserService extends BaseService<SysUser, Integer> {
      */
     PageInfo<SysUserVo> findAllPageInfo(QueryParameter parameter);
 
+    Boolean updateUer(SysUser entity);
+
 }

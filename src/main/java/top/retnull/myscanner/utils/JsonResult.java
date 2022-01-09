@@ -93,7 +93,7 @@ public class JsonResult<T> implements Serializable {
     /**
      * 操作成功
      *
-     * @return com.ifsaid.shark.util.JsonResult
+     * @return
      * @author retnull
      * @date 2022/1/4
      */
@@ -269,6 +269,7 @@ public class JsonResult<T> implements Serializable {
      * @date 2022/1/4
      */
     @Getter
+
     public enum HttpStatus {
 
         /**

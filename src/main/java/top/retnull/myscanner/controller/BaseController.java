@@ -11,6 +11,7 @@ import top.retnull.myscanner.service.BaseService;
 import top.retnull.myscanner.utils.JsonResult;
 import top.retnull.myscanner.utils.QueryParameter;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 

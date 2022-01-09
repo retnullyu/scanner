@@ -97,4 +97,9 @@ public class SysUser extends BaseEntity implements java.io.Serializable {
      */
     private Integer status;
 
+    /**
+     * fofa key
+     */
+    private String fofakey;
+
 }
