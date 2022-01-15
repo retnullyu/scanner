@@ -178,12 +178,6 @@
             <version>1.0.4.RELEASE</version>
         </dependency>
 
-        <!-- 七牛云 文件上传sdk -->
-        <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
-            <version>${qiniu.version}</version>
-        </dependency>
 
         <!-- 图片裁剪,压缩 -->
         <dependency>
@@ -202,7 +196,18 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
-            <version>2.2.5</version>
+            <version>2.2.6</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>cglib</groupId>
+                    <artifactId>cglib</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.3.0</version>
         </dependency>
 
     </dependencies>

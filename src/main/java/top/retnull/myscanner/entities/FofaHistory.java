@@ -54,4 +54,9 @@ public class FofaHistory extends BaseEntity {
     @Column(name = "is_exported")
     private Integer isexported;
 
+    /**
+     * 导出路径
+     */
+    private String url;
+
 }

@@ -47,19 +47,12 @@ public class FofaController extends BaseController<FofaHistory, Integer, FofaSer
         return JsonResult.fail("更新失败");
     }
     @RequestMapping("query")
-    public JsonResult<FofaVo> fofaquery(String keyword,String currentPage){
-//        keyword = keyword.replace("#","\\\"");
+    public JsonResult<FofaVo> fofaquery(String keyword,Integer currentPage){
         JwtLoginUser userDetails = SecurityUtils.getLoginUser();
         FofaHistory fofaHistory = FofaHistory.builder().querykey(keyword).uid(userDetails.getUid()).isexported(0).build();
         try {
-            FofaData fofaData = baseService.fofaquery(fofaHistory);
-            List<List<String>> lists = fofaData.getResults();
-            ArrayList<ExcelVo> excelVos = new ArrayList<>();
-            for(List<String> temp:lists){
-               ExcelVo excelVo = ExcelVo.builder().host(temp.get(0)).title(temp.get(1)).build();
-               excelVos.add(excelVo);
-            }
-            FofaVo fofaVo =  FofaVo.builder().result(excelVos).page(fofaData.getPage()).totalpages(fofaData.getTotalPage()).build();
+           FofaVo fofaVo = baseService.fofaquery(fofaHistory,currentPage);
+
             return JsonResult.success(fofaVo);
 
         } catch (Exception e) {
@@ -68,8 +61,16 @@ public class FofaController extends BaseController<FofaHistory, Integer, FofaSer
     }
     @RequestMapping("history")
     public JsonResult fofahistory(){
+        return JsonResult.success(baseService.fofahistory());
+    }
 
-    return null;
+    @RequestMapping("export")
+    public JsonResult fofaexport(String keyword) throws Exception {
+        log.info(keyword);
+        JwtLoginUser userDetails = SecurityUtils.getLoginUser();
+        FofaHistory fofaHistory = FofaHistory.builder().uid(userDetails.getUid()).querykey(keyword).build();
+        return JsonResult.success(baseService.export(fofaHistory));
+
     }
 
 }

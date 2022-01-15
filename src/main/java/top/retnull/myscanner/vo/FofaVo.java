@@ -27,6 +27,8 @@ public class FofaVo implements java.io.Serializable {
 
     Integer totalpages;
 
+    Integer size;
+
     List<ExcelVo> result;
 
 }

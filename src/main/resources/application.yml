@@ -1,6 +1,9 @@
 server:
   port: 8090
 
+web:
+  upload-path: ~/temp/
+
 spring:
   profiles:
     active: dev
@@ -10,6 +13,8 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
     default-property-inclusion: non_null
+    resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,file:${web.upload-path}
 
 # spring boot mybatis 自动配置
 mybatis:
@@ -50,3 +55,4 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
+

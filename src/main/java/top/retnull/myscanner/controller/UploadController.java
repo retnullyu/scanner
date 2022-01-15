@@ -5,25 +5,20 @@ import io.micrometer.core.instrument.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.geometry.Positions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import top.retnull.myscanner.entities.SysUser;
+import top.retnull.myscanner.jwt.JwtLoginUser;
+import top.retnull.myscanner.service.SysUserService;
 import top.retnull.myscanner.utils.JsonResult;
-import top.retnull.myscanner.utils.QiniuUtils;
-
-import javax.imageio.ImageIO;
+import top.retnull.myscanner.utils.SecurityUtils;
+import java.util.UUID;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -45,8 +40,9 @@ import java.util.regex.Pattern;
 @RequestMapping("/upload")
 public class UploadController {
 
+
     @Autowired
-    private QiniuUtils qiniuUtils;
+    private SysUserService sysUserService;
 
     /**
      * 图片上传
@@ -71,8 +67,8 @@ public class UploadController {
         Matcher matcher = Pattern.compile(reg).matcher(file.getOriginalFilename());
         // 校验 图片的后缀名 是否符合要求
         if (matcher.find()) {
-            Map<String, String> map = uploadFile(file, 500, 500);
-            return JsonResult.success(map);
+           String imagfile = uploadFile(file);
+            return JsonResult.success(imagfile);
         }
         return JsonResult.fail("图片格式不正确,只可以上传[ JPG , JPEG , PNG ]中的一种");
     }
@@ -101,62 +97,42 @@ public class UploadController {
         Matcher matcher = Pattern.compile(reg).matcher(file.getOriginalFilename());
         // 校验 图片的后缀名 是否符合要求
         if (matcher.find()) {
-            Map<String, String> map = uploadFile(file, 200, 200);
-            return JsonResult.success(map);
+            String imagefile = uploadFile(file);
+            return JsonResult.success(imagefile);
         }
         return JsonResult.fail("头像格式不正确,只可以上传[ JPG , JPEG , PNG ]中的一种");
     }
 
-    /**
-     * 删除图片
-     *
-     * @param url
-     * @return java.io.File
-     * @throws IOException
-     * @author retnull
-     * @date 2022/1/4
-     */
-    @ApiOperation(value = "图片删除", notes = "根据url 删除图片")
-    @DeleteMapping("/delete")
-    public JsonResult deleteImages(String url) throws IOException {
-        if (StringUtils.isNotEmpty(url)) {
-            String fileKey = url.substring((url.lastIndexOf("/") + 1), url.length());
-            log.info("deleteImages url: {}  fileKey: {}", url, fileKey);
-            qiniuUtils.delete(fileKey);
-        }
-        return JsonResult.success();
-    }
 
     /**
      * 图片压缩并且上传 七牛云 OSS
      *
-     * @param file
-     * @param height
-     * @param width
+
      * @return Map<String, String>
      * @author retnull
      * @date 2022/1/4
      */
-    private Map<String, String> uploadFile(MultipartFile file, int width, int height) throws IOException {
-        // 获取一个空文件
-        File targetFile = qiniuUtils.makeParentFolder(file.getOriginalFilename());
-        // 因为是spring boot 打包以后是jar包，所以需要用ClassPathResource来获取classpath下面的水印图片
-        InputStream watermark = new ClassPathResource("images/watermark.png").getInputStream();
-        // 图片压缩以后读到空文件中
-        Thumbnails.of(file.getInputStream())
-                .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(watermark), 0.5f)
-                .outputQuality(0.8f)
-                .size(width, height).toFile(targetFile);
-        // 把压缩好的图片上传到 七牛云
-        String url = qiniuUtils.upload(new FileInputStream(targetFile), targetFile.getName());
-        Map<String, String> result = new HashMap<>(2);
-        result.put("url", url);
-        result.put("fileName", targetFile.getName());
-        log.info("uploadFile( {} , {} , {} , {} );", file.getOriginalFilename(), file.getSize(), file.getContentType(), targetFile.getName(), url);
-        // 删除压缩文件
-        targetFile.delete();
-        return result;
+    private String uploadFile(MultipartFile file) throws IOException {
+        String basePath = ResourceUtils.getURL("classpath:").getPath() + "static/";
+        // 对上传的文件重命名，避免文件重名
+        String oldName = file.getOriginalFilename();
+        String newName = UUID.randomUUID()
+                + oldName.substring(oldName.lastIndexOf("."));
+        try {
+            // 文件保存
+            file.transferTo(new File(basePath, newName));
+            JwtLoginUser userDetails = SecurityUtils.getLoginUser();
+            SysUser sysUser = sysUserService.findById(userDetails.getUid());
+            sysUser.setAvatar(newName);
+            sysUserService.updateUer(sysUser);
+            // 返回上传文件的访问路径
+            return newName;
+        } catch (IOException e) {
+            throw new IOException();
+        }
+
     }
+
 
 
 }

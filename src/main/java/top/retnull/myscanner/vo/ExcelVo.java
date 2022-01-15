@@ -56,4 +56,8 @@ public class ExcelVo {
     @ColumnWidth(35)
     @ExcelProperty(value = "fid", index = 8)
     private String fid;
+
+    @ColumnWidth(35)
+    @ExcelProperty(value = "url", index = 9)
+    private String url;
 }

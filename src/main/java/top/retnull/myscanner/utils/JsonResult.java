@@ -139,17 +139,7 @@ public class JsonResult<T> implements Serializable {
     }
 
 
-    /**
-     * 操作成功
-     *
-     * @param message
-     * @return com.ifsaid.shark.util.JsonResult
-     * @author retnull
-     * @date 2022/1/4
-     */
-    public static <T> JsonResult success(String message) {
-        return success(message, null);
-    }
+
 
     /**
      * 操作成功

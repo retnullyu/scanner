@@ -4,6 +4,9 @@ import com.r4v3zn.fofa.core.DO.FofaData;
 import top.retnull.myscanner.entities.FofaHistory;
 import top.retnull.myscanner.entities.SysUser;
 import top.retnull.myscanner.vo.FofaConfig;
+import top.retnull.myscanner.vo.FofaVo;
+
+import java.util.List;
 
 
 /**
@@ -23,11 +26,11 @@ public interface FofaService extends BaseService<FofaHistory, Integer> {
     Boolean fofaconfig(FofaConfig fofaConfig);
 
 
-    FofaData fofaquery(FofaHistory fofaQueryHistory) throws Exception;
+    FofaVo fofaquery(FofaHistory fofaQueryHistory, Integer page) throws Exception;
 
-     FofaHistory fofahistory(SysUser sysUser);
+     List<FofaHistory> fofahistory();
 
-     Boolean export(FofaHistory fofaQueryHistory);
+     String export(FofaHistory fofaQueryHistory) throws Exception;
 
 
 }

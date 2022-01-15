@@ -17,6 +17,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import top.retnull.myscanner.jwt.JwtAccessDeniedHandler;
 import top.retnull.myscanner.jwt.JwtAuthenticationEntryPoint;
 import top.retnull.myscanner.jwt.JwtAuthenticationTokenFilter;
@@ -56,6 +59,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        configuration.setAllowCredentials(false);//是否支持安全证书(必需参数)
+        configuration.addAllowedOrigin(CorsConfiguration.ALL); //允许任何域名
+        configuration.addAllowedHeader(CorsConfiguration.ALL); //允许任何请求头
+        configuration.addAllowedMethod(CorsConfiguration.ALL); //允许任何请求方法
+        source.registerCorsConfiguration("/**", configuration);//访问路径
+        return source;
+    }
 
     @Autowired
     //设置自定义的userDetailsService以及密码编码器
@@ -71,7 +85,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.cors().and().csrf().disable()
+        httpSecurity
                 //授权异常处理
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
@@ -90,11 +104,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/configuration/security",
                         "/webjars/**",
                         "/swagger-resources/configuration/ui",
-                        "/swagger-ui.html"
+                        "/swagger-ui.html",
+                        "/*.png",
+                        "/*.jpg",
+                        "/*.csv"
                 )
                 .permitAll().anyRequest().authenticated();//需要经过认证
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.headers().cacheControl();
+        httpSecurity.csrf().disable().cors().configurationSource(corsConfigurationSource()); //配置跨域
     }
 
     /**
