@@ -6,7 +6,7 @@ web:
 
 spring:
   profiles:
-    active: dev
+    active: prod
   application:
     name: myScanner
   jackson:

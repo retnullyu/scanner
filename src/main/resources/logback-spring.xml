@@ -27,7 +27,7 @@
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } --- [%t] %-40.40logger{39} : %m%n%wex"/>
 
     <!--  开发环境和测试环境，日志输出到控制台  -->
-    <springProfile name="dev,test">
+    <springProfile name="dev,prod">
         <!-- 控制台输出 -->
         <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
             <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder" charset="UTF-8">

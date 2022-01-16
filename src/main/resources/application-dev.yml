@@ -24,10 +24,4 @@ spring:
       use-key-prefix: true
       time-to-live: 60s
 
-# 七牛云文件上传配置
-qiniu:
-  accessKey:
-  secretKey:
-  bucketName:
-  fileDomain:
 
