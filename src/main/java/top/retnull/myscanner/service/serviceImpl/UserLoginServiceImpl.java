@@ -55,8 +55,6 @@ public class UserLoginServiceImpl implements UserLoginService {
     @Autowired
     private SysUserService sysUserService;
 
-    @Autowired
-    private SysDepartmentService sysDepartmentService;
 
     @Autowired
     @Lazy
@@ -250,8 +248,8 @@ public class UserLoginServiceImpl implements UserLoginService {
                 .stream()
                 .map(r -> r.getDescription())
                 .collect(Collectors.toSet());
-        String departmentName = sysDepartmentService.findById(sysUser.getDeptId()).getName();
-        result.setDepartmentName(departmentName);
+//        String departmentName = sysDepartmentService.findById(sysUser.getDeptId()).getName();
+//        result.setDepartmentName(departmentName);
         result.setRoles(rolesName);
         return result;
     }

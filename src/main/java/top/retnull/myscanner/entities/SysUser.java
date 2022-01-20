@@ -84,13 +84,6 @@ public class SysUser extends BaseEntity implements java.io.Serializable {
     private LocalDate birthday;
 
     /**
-     * 部门 Id
-     *
-     * @date 2022/1/4
-     */
-    private Integer deptId;
-
-    /**
      * 状态 [ 0.禁用 1.正常 2.被删除 ]
      *
      * @date 2022/1/4

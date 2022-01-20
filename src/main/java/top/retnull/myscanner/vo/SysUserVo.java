@@ -26,12 +26,12 @@ import java.util.List;
 @AllArgsConstructor
 public class SysUserVo extends SysUser implements java.io.Serializable {
 
-    /**
-     * 部门名称
-     *
-     * @date 2022/1/4
-     */
-    private String departmentName;
+//    /**
+//     * 部门名称
+//     *
+//     * @date 2022/1/4
+//     */
+//    private String departmentName;
 
     /**
      * 角色名称，列表

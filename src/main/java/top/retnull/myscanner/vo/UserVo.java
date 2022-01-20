@@ -64,12 +64,12 @@ public class UserVo implements java.io.Serializable {
      */
     private Integer gender;
 
-    /**
-     * 部门名称
-     *
-     * @date 2022/1/4
-     */
-    private String departmentName;
+//    /**
+//     * 部门名称
+//     *
+//     * @date 2022/1/4
+//     */
+//    private String departmentName;
 
     /**
      * 角色名称，列表

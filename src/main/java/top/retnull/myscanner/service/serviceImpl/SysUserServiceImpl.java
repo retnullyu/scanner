@@ -14,7 +14,6 @@ import top.retnull.myscanner.constant.StatusConstant;
 import top.retnull.myscanner.entities.Relation;
 import top.retnull.myscanner.entities.SysUser;
 import top.retnull.myscanner.mapper.SysUserMapper;
-import top.retnull.myscanner.service.SysDepartmentService;
 import top.retnull.myscanner.service.SysRoleService;
 import top.retnull.myscanner.service.SysUserService;
 import top.retnull.myscanner.utils.QueryParameter;
@@ -47,8 +46,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, Integer, SysUse
     @Autowired
     private SysRoleService sysRoleService;
 
-    @Autowired
-    private SysDepartmentService departmentService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -75,8 +72,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, Integer, SysUse
                             })
                             .collect(Collectors.toList());
                     sysUserVo.setRoles(roles);
-                    String departmentName = departmentService.findById(res.getDeptId()).getName();
-                    sysUserVo.setDepartmentName(departmentName);
+//                    String departmentName = departmentService.findById(res.getDeptId()).getName();
+//                    sysUserVo.setDepartmentName(departmentName);
                     return sysUserVo;
                 }).collect(Collectors.toList());
         PageInfo<SysUserVo> result = new PageInfo<>();
