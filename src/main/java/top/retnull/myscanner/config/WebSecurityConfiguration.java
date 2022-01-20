@@ -97,14 +97,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**", "/actuator/**").permitAll() //所有用户可访问
                 .antMatchers("/information/**").permitAll() //暂时测试
                 .antMatchers(
-                        "/v2/api-docs",
-                        "/doc.html",
-                        "/configuration/ui",
-                        "/swagger-resources",
-                        "/configuration/security",
-                        "/webjars/**",
-                        "/swagger-resources/configuration/ui",
-                        "/swagger-ui.html",
+//                        "/v2/api-docs",
+//                        "/doc.html",
+//                        "/configuration/ui",
+//                        "/swagger-resources",
+//                        "/configuration/security",
+//                        "/webjars/**",
+//                        "/swagger-resources/configuration/ui",
+//                        "/swagger-ui.html",
                         "/*.png",
                         "/*.jpg",
                         "/*.csv"
