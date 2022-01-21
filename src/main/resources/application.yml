@@ -1,10 +1,10 @@
 server:
   port: 8090
-
-web:
-  upload-path: ~/temp/
-
 spring:
+  servlet:
+    multipart:
+      maxFileSize: 10MB
+      maxRequestSize: 10MB
   profiles:
     active: dev
   application:

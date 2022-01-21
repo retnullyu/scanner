@@ -1,3 +1,5 @@
+web.upload-path: /Users/yl/temp/
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

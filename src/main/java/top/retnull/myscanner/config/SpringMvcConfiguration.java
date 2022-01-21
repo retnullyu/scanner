@@ -11,6 +11,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.format.Formatter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import top.retnull.myscanner.jwt.JwtAuthenticationTokenFilter;
 
@@ -43,6 +45,9 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
     private static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
 
     private static final String DEFAULT_TIME_PATTERN = "HH:mm:ss";
+
+    @Value("${web.upload-path}")
+    private String path;
 
     /**
      * 允许跨域配置
@@ -154,5 +159,18 @@ public class SpringMvcConfiguration implements WebMvcConfigurer {
             }
         };
     }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
+        // 注意如果filePath是写死在这里，一定不要忘记尾部的/或者\\，这样才能读取其目录下的文件
+        registry.addResourceHandler("/**").addResourceLocations(
+                "classpath:/META-INF/resources/",
+                "classpath:/resources/",
+                "classpath:/static/",
+                "classpath:/public/",
+                "classpath:/webapp/");
+        registry.addResourceHandler("/img/**").addResourceLocations( "file:" + path);
+    }
+
 
 }

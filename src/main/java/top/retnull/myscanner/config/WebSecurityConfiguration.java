@@ -107,7 +107,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                        "/swagger-ui.html",
                         "/*.png",
                         "/*.jpg",
-                        "/*.csv"
+                        "/*.csv",
+                        "/img/**"
+
                 )
                 .permitAll().anyRequest().authenticated();//需要经过认证
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);

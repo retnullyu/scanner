@@ -6,6 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,7 @@ import java.util.regex.Pattern;
  */
 
 @Slf4j
-@Api(tags = "[ 七牛云 ]文件上传")
+@Api(tags = "[ 文件上传 ]文件上传")
 @RestController
 @RequestMapping("/upload")
 public class UploadController {
@@ -43,6 +44,9 @@ public class UploadController {
 
     @Autowired
     private SysUserService sysUserService;
+
+    @Value("${web.upload-path}")
+    private String path;
 
     /**
      * 图片上传
@@ -120,18 +124,21 @@ public class UploadController {
                 + oldName.substring(oldName.lastIndexOf("."));
         try {
             // 文件保存
-            file.transferTo(new File(basePath, newName));
+            file.transferTo(new File(path+newName));
             JwtLoginUser userDetails = SecurityUtils.getLoginUser();
             SysUser sysUser = sysUserService.findById(userDetails.getUid());
-            sysUser.setAvatar(newName);
+            sysUser.setAvatar("img/"+newName);
             sysUserService.updateUer(sysUser);
             // 返回上传文件的访问路径
             return newName;
         } catch (IOException e) {
+            log.error(e.getMessage());
             throw new IOException();
         }
 
     }
+
+
 
 
 
