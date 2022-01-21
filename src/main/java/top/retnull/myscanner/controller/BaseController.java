@@ -67,7 +67,7 @@ public class BaseController<T extends BaseEntity, ID, S extends BaseService<T, I
         try {
             int result = baseService.update(entity);
             return JsonResult.success(result);
-        } catch (Exception e) {
+        } catch (Exception  e) {
             return JsonResult.fail(e.getMessage());
         }
     }

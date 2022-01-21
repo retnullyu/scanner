@@ -51,6 +51,7 @@ public class AuthController {
     public JsonResult<TokenValue> login(@RequestBody @Validated LoginUser user, BindingResult br) {
         // 根据 CodeKey(uuid) 从 redis 中获取到 ServerCodeText
         if (!verifyCodeService.checkVerifyCode(user.getCodeKey(), user.getCodeText())) {
+            verifyCodeService.deleteImageVerifyCode(user.getCodeKey());
             return JsonResult.fail("验证码错误！");
         }
         try {
@@ -62,6 +63,7 @@ public class AuthController {
             log.error(ex.getMessage());
             return JsonResult.fail("此用户被锁定！暂时无法登录，请联系管理员！");
         } catch (AuthenticationException ex) {
+            verifyCodeService.deleteImageVerifyCode(user.getCodeKey());
             log.error(ex.getMessage());
             return JsonResult.fail("用户名或密码错误");
         }

@@ -82,5 +82,12 @@ public class SysUserController extends BaseController<SysUser, Integer, SysUserS
         return JsonResult.success(result);
     }
 
+    @ApiOperation(value = "更新用户信息", notes = "更新用户信息")
+    @PostMapping("/update")
+    public JsonResult updateUser(@RequestBody @Validated UserRelatedRoleVo data, BindingResult br) {
+        int result = baseService.updateUserRoles(data.getUid(), data.getRoles());
+        return JsonResult.success(result);
+    }
+
 
 }

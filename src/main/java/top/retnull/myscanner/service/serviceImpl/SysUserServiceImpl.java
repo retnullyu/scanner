@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import top.retnull.myscanner.constant.StatusConstant;
 import top.retnull.myscanner.entities.Relation;
 import top.retnull.myscanner.entities.SysUser;
+import top.retnull.myscanner.jwt.JwtLoginUser;
 import top.retnull.myscanner.mapper.SysUserMapper;
 import top.retnull.myscanner.service.SysRoleService;
 import top.retnull.myscanner.service.SysUserService;
@@ -135,7 +136,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, Integer, SysUse
 
     @Override
     public int updatePassword(UpdatePassword pwd) {
-        SysUser sysUser = baseMapper.selectByPrimaryKey(pwd.getUid());
+        SysUser sysUser = baseMapper.selectByPrimaryKey(SecurityUtils.getLoginUser().getUid());
         if (!pwd.getNewPwd().equals(pwd.getConfirmPwd())) {
             throw new RuntimeException("新密码与确认密码不一致，请重新输入！");
         }
@@ -144,7 +145,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, Integer, SysUse
                 throw new RuntimeException("新密码与旧密码相同，请重新输入！");
             } else {
                 String newPassword = passwordEncoder.encode(pwd.getNewPwd());
-                return update(SysUser.builder().uid(sysUser.getUid()).password(newPassword).build());
+                return super.update(SysUser.builder().uid(sysUser.getUid()).password(newPassword).build());
             }
         }
         throw new RuntimeException("旧密码错误，请重新输入！");
@@ -168,13 +169,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, Integer, SysUse
     public int update(SysUser entity) {
         // 不允许使用 update 修改密码！
         entity.setPassword(null);
-        if (StringUtils.hasText(entity.getUsername())) {
-            int count = baseMapper.selectCount(SysUser.builder().username(entity.getUsername()).build());
-            if (count > 0) {
-                throw new RuntimeException(String.format("用户名“ %s ”已存在，请重新输入！", entity.getUsername()));
-            }
-        }
+        entity.setAvatar(null);
+        entity.setUid(SecurityUtils.getLoginUser().getUid());
         return super.update(entity);
+
     }
     @Override
     public Boolean updateUer(SysUser entity){
