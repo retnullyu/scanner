@@ -48,16 +48,16 @@ public class AuthController {
 
     @ApiOperation(value = "用户登录认证", notes = "用户名，密码登录格式 {\"username\":\"admin\",\"password\":\"admin\"}")
     @PostMapping("/login")
-    public JsonResult<TokenValue> login(@RequestBody @Validated LoginUser user, BindingResult br) {
+    public JsonResult<TokenValue> login(@RequestBody  LoginUser user, BindingResult br) {
         // 根据 CodeKey(uuid) 从 redis 中获取到 ServerCodeText
-        if (!verifyCodeService.checkVerifyCode(user.getCodeKey(), user.getCodeText())) {
-            verifyCodeService.deleteImageVerifyCode(user.getCodeKey());
-            return JsonResult.fail("验证码错误！");
-        }
+//        if (!verifyCodeService.checkVerifyCode(user.getCodeKey(), user.getCodeText())) {
+//            verifyCodeService.deleteImageVerifyCode(user.getCodeKey());
+//            return JsonResult.fail("验证码错误！");
+//        }
         try {
             TokenValue tokenValue = userLoginService.login(user.getUsername(), user.getPassword());
             // 登录成功后，就从 redis 中删除验证码
-            verifyCodeService.deleteImageVerifyCode(user.getCodeKey());
+//            verifyCodeService.deleteImageVerifyCode(user.getCodeKey());
             return JsonResult.success("登录成功", tokenValue);
         } catch (LockedException ex) {
             log.error(ex.getMessage());

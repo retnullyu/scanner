@@ -85,6 +85,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+
         httpSecurity
                 //授权异常处理
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
@@ -115,7 +116,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.headers().cacheControl();
         httpSecurity.csrf().disable().cors().configurationSource(corsConfigurationSource()); //配置跨域
+
     }
+
+
 
     /**
      * spring密码加密器

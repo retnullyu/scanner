@@ -66,7 +66,7 @@ public class FofaClient {
         String loginEmail = this.email;
         String loginKey = this.key;
         // get user
-        String url = BASE_URL + GET_USER_INFO_URI;
+        String url = "https://fofa.info" + GET_USER_INFO_URI;
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("email", loginEmail);
         map.put("key", loginKey);
@@ -170,7 +170,7 @@ public class FofaClient {
         page = page < 0 ? 1:page;
         // check full is not null
         full = full == null ? false:full;
-        String url = BASE_URL+SEARCH_URI;
+        String url = "https://fofa.info"+SEARCH_URI;
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("qbase64", encode(q));
         map.put("page", page);

@@ -1,4 +1,4 @@
-web.upload-path: /Users/yl/temp/
+web.upload-path: /home/yl/temp 
 
 spring:
   datasource:

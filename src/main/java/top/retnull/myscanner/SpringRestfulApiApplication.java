@@ -16,7 +16,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableScheduling
 @EnableTransactionManagement
 @MapperScan("top.retnull.myscanner.mapper")
-@SpringBootApplication
+@SpringBootApplication()
 public class SpringRestfulApiApplication {
 
     public static void main(String[] args) {
