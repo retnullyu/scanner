@@ -4,7 +4,7 @@ English | [简体中文](./README-zh.md)
 
 **a vuln scanner powered by springboot&spring security and vueadmin**
 
-btw:This is the back-end code address, the front-end please visit[https://github.com/retnullyu/myscaner-front](https://github.com/retnullyu/myscaner-front.git)
+btw:This is the back-end code address, the front-end please visit[https://github.com/retnullyu/myscanner-front](https://github.com/retnullyu/myscanner-front.git)
 
 
 
