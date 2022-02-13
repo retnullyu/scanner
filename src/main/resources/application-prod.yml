@@ -5,7 +5,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/myscanner?useUnicode=true&characterEncoding=UTF8&useSSL=false&serverTimezone=GMT%2B8
     username: root
-    password: xLY1999110
+    password: yourpass
     platform: mysql
     type: com.zaxxer.hikari.HikariDataSource
 
@@ -14,7 +14,7 @@ spring:
     host: localhost
     port: 6379
     timeout: 2000
-    password: xLY1999110
+    password: yourpass 
     lettuce:
       pool:
         max-idle: 8
