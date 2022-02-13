@@ -2,7 +2,7 @@
 
 简体中文 | [English](./README.md)
 
-**一个基于springboot&springsecurity和vueadmin的综合信息收集和漏洞扫描系统**
+**一个基于springboot&springsecurity&mysql&redis和vuea-dmin的综合信息收集和漏洞扫描系统**
 
 注意:这是后端和数据库仓库，前端部署请访问[https://github.com/retnullyu/myscanner-front](https://github.com/retnullyu/myscanner-front.git)
 
