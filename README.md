@@ -20,4 +20,4 @@ btw:This is the back-end code address, the front-end please visit[https://github
 
 
 
-**The project is currently under development, please look forward to more features**
+**The project has been abandoned and is currently used as a project that can rapidly develop Java-vue framework**
